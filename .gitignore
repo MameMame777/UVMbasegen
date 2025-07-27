@@ -7,6 +7,10 @@ sim/exec/metrics.db
 sim/exec/waves/
 sim/exec/*.log
 
+# DSIM environment files (contain personal info)
+dsim.env
+*.env
+
 # General simulation files
 *.vcd
 *.mxd
