@@ -1,0 +1,65 @@
+# DSIM simulation intermediate files
+sim/exec/dsim_work/
+sim/exec/dsim.log
+sim/exec/dsim.env
+sim/exec/tr_db.log
+sim/exec/metrics.db
+sim/exec/waves/
+sim/exec/*.log
+
+# General simulation files
+*.vcd
+*.mxd
+*.wlf
+*.ucdb
+*.vstf
+
+# Build artifacts
+build/
+work/
+*.bak
+*.tmp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/settings.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Generated documentation
+docs/_build/
+docs/build/
+
+# Temporary directories
+temporary/
+temp/
+tmp/
+
+# License files (may contain sensitive info)
+*.lic
+*license*
+!LICENSE
+!license.txt
+!LICENSE.txt
+
+# Environment specific files
+.env
+*.env
+!dsim.env
