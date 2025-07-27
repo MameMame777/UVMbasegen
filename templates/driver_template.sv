@@ -75,11 +75,11 @@ class register_file_driver extends uvm_driver #(register_file_transaction);
     // Drive a single transaction
     virtual task drive_transaction(register_file_transaction req);
         case (req.operation)
-            READ: begin
+            {module_name}_transaction::READ: begin
                 drive_read(req.address);
                 req.data = vif.driver_cb.read_data;
             end
-            WRITE: begin
+            {module_name}_transaction::WRITE: begin
                 drive_write(req.address, req.data);
             end
             default: begin

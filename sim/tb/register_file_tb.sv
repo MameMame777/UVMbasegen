@@ -1,7 +1,9 @@
 `timescale 1ns / 1ps
 
-// Import UVM macros (available with -uvm flag in DSIM)
-`include "uvm_macros.svh"
+// UVM testbench for register_file
+// Uses DSIM built-in UVM library with -uvm flag
+
+// Import UVM package and custom package
 import uvm_pkg::*;
 import register_file_pkg::*;
 
@@ -9,9 +11,8 @@ import register_file_pkg::*;
 // Top-level testbench module connecting DUT, interface, and UVM test
 module register_file_tb;
     
-    // Clock and reset generation
+    // Clock generation
     logic clk;
-    logic reset;
     
     // Clock generation (100MHz)
     initial begin
@@ -19,17 +20,10 @@ module register_file_tb;
         forever #5ns clk = ~clk;
     end
     
-    // Reset generation
-    initial begin
-        reset = 1;
-        #50ns;
-        reset = 0;
-    end
-    
     // Interface instantiation
     register_file_if vif(clk);
     
-    // DUT instantiation
+    // DUT instantiation - all signals come from interface
     register_file dut (
         .clk(clk),
         .reset(vif.reset),

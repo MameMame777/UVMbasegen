@@ -5,8 +5,8 @@
 ..\..\rtl\interfaces\register_file_if.sv
 ..\..\rtl\hdl\register_file.sv
 
-// UVM library (use DSIM built-in UVM)
--uvm
+// UVM package file (contains all UVM components)
+..\uvm\base\register_file_pkg.sv
 
-// Testbench top (includes UVM package directly)
+// Testbench top
 ..\tb\register_file_tb.sv

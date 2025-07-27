@@ -1,0 +1,54 @@
+# Dashboard Configuration for UVM Verification Project
+database_path: "verification_metrics.db"
+output_directory: "dashboard_output"
+refresh_interval_minutes: 5
+
+# Email notification settings
+email_notifications: false
+smtp_server: "smtp.company.com"
+smtp_port: 587
+email_recipients:
+  - "verification-team@company.com"
+  - "project-manager@company.com"
+
+# Coverage targets (percentage)
+coverage_targets:
+  functional: 95.0
+  code: 90.0
+  toggle: 85.0
+  fsm: 100.0
+
+# Performance targets
+performance_targets:
+  simulation_speed_khz: 1000
+  memory_usage_gb: 16
+  regression_time_hours: 8
+
+# Alert thresholds
+alert_thresholds:
+  pass_rate_minimum: 90.0
+  coverage_drop_threshold: 5.0
+  performance_degradation_threshold: 20.0
+
+# Report generation settings
+reports:
+  daily_summary: true
+  weekly_detailed: true
+  monthly_trends: true
+
+# Chart styling
+chart_settings:
+  theme: "plotly_white"
+  color_scheme:
+    primary: "#007acc"
+    success: "#28a745"
+    warning: "#ffc107"
+    danger: "#dc3545"
+    info: "#17a2b8"
+
+# Project information
+project_info:
+  name: "UVM Register File Verification"
+  version: "1.0"
+  team: "FPGA Verification Team"
+  start_date: "2025-07-01"

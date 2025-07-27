@@ -47,10 +47,6 @@ if %FOUND%==0 (
     exit /b 1
 )
 
-REM DSIM Environment Setup
-set "DSIM_LICENSE=%USERPROFILE%\AppData\Local\metrics-ca\dsim-license.json"
-call "%USERPROFILE%\AppData\Local\metrics-ca\dsim\20240422.0.0\shell_activate.bat"
-
 REM Check DSIM environment
 if not defined DSIM_HOME (
     echo ERROR: DSIM_HOME environment variable not set
@@ -76,17 +72,11 @@ if not exist waves mkdir waves
 REM Execute DSIM simulation with organized include paths
 echo Starting DSIM simulation...
 dsim ^
-    +incdir+../uvm/base +incdir+../uvm/transactions +incdir+../uvm/sequences +incdir+../uvm/agents +incdir+../uvm/env +incdir+../uvm/tests ^
-    +incdir+%DSIM_HOME%\uvm\1.2\src ^
-    +define+UVM_NO_DEPRECATED ^
-    +define+UVM_NO_DPI ^
+    -uvm 1.2 ^
     +acc+b ^
-    -sv ^
-    %DSIM_HOME%\uvm\1.2\src\uvm_pkg.sv ^
-    ../../rtl/interfaces/register_file_if.sv ^
-    ../../rtl/hdl/register_file.sv ^
-    ../uvm/base/register_file_pkg.sv ^
-    ../tb/register_file_tb.sv ^
+    +incdir+../uvm/base +incdir+../uvm/transactions +incdir+../uvm/sequences +incdir+../uvm/agents +incdir+../uvm/env +incdir+../uvm/tests ^
+    +define+UVM_NO_DEPRECATED ^
+    -f %FILELIST% ^
     +UVM_TESTNAME=%TEST_CLASS% ^
     +UVM_VERBOSITY=%VERBOSITY% ^
     -waves waves\%WAVE_FILE% ^

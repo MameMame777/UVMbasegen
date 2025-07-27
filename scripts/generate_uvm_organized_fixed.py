@@ -112,12 +112,6 @@ class UVMGenerator:
         timescale = self.config['simulation']['timescale']
         
         substitutions = {
-            # Module name placeholders
-            '{module_name}': module_name,
-            '{interface_name}': interface_name,
-            '{timestamp}': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            '{timescale}': timescale,
-            # Specific class names to be replaced
             'register_file': module_name,
             'register_file_if': interface_name,
             '`timescale 1ns / 1ps': f'`timescale {timescale}',
@@ -210,6 +204,92 @@ endpackage
             print(f"ERROR generating package file: {e}")
             return False
     
+    def generate_testbench_file(self) -> bool:
+        """Generate testbench file with proper UVM package imports."""
+        try:
+            module_name = self.config['dut']['module_name']
+            interface_name = self.config['dut']['interface_name']
+            
+            tb_content = f'''`timescale {self.config['simulation']['timescale']}
+
+// Import UVM macros (available with -uvm flag in DSIM)
+`include "uvm_macros.svh"
+// Include the UVM package file directly
+`include "{module_name}_pkg.sv"
+
+// Import the UVM package
+import uvm_pkg::*;
+import {module_name}_pkg::*;
+
+// {module_name} Testbench Top
+// Top-level testbench module connecting DUT, interface, and UVM test
+module {module_name}_tb;
+    
+    // Clock and reset generation
+    logic clk;
+    logic reset;
+    
+    // Clock generation (100MHz)
+    initial begin
+        clk = 0;
+        forever #5ns clk = ~clk;
+    end
+    
+    // Reset generation
+    initial begin
+        reset = 1;
+        #50ns;
+        reset = 0;
+    end
+    
+    // Interface instantiation
+    {interface_name} vif(clk);
+    
+    // DUT instantiation
+    {module_name} dut (
+        .clk(clk),
+        .reset(vif.reset),
+        .write_enable(vif.write_enable),
+        .address(vif.address),
+        .write_data(vif.write_data),
+        .read_enable(vif.read_enable),
+        .read_data(vif.read_data),
+        .ready(vif.ready)
+    );
+    
+    // UVM testbench initialization
+    initial begin
+        // Set interface in config DB for UVM components
+        uvm_config_db#(virtual {interface_name})::set(null, "*", "vif", vif);
+        
+        // Enable wave dumping (MXD format for DSIM)
+        $dumpfile("{module_name}_tb.mxd");
+        $dumpvars(0, {module_name}_tb);
+        
+        // Run the test
+        run_test();
+    end
+    
+    // Timeout mechanism
+    initial begin
+        #10ms;
+        `uvm_fatal("TIMEOUT", "Test timeout after 10ms")
+    end
+
+endmodule
+'''
+            
+            tb_file = self.base_dir / self.config['directories']['sim_tb'] / f"{module_name}_tb.sv"
+            with open(tb_file, 'w', encoding='utf-8') as f:
+                f.write(tb_content)
+            
+            print(f"Generated: {tb_file}")
+            return True
+            
+        except Exception as e:
+            print(f"ERROR generating testbench file: {e}")
+            return False
+    
     def generate_dsim_script(self) -> bool:
         """Generate DSIM simulation script following DSIMtuto best practices with organized structure."""
         try:
@@ -271,6 +351,10 @@ if not defined DSIM_HOME (
     exit /b 1
 )
 
+REM DSIM Environment Setup
+set "DSIM_LICENSE=%USERPROFILE%\\AppData\\Local\\metrics-ca\\dsim-license.json"
+call "%USERPROFILE%\\AppData\\Local\\metrics-ca\\dsim\\20240422.0.0\\shell_activate.bat"
+
 REM Display test information
 echo.
 echo ================================================================================
@@ -290,8 +374,6 @@ if not exist waves mkdir waves
 REM Execute DSIM simulation with organized include paths
 echo Starting DSIM simulation...
 dsim ^
-    -uvm 1.2 ^
-    +acc+b ^
     +incdir+../uvm/base +incdir+../uvm/transactions +incdir+../uvm/sequences +incdir+../uvm/agents +incdir+../uvm/env +incdir+../uvm/tests ^
     +define+UVM_NO_DEPRECATED ^
     -f %FILELIST% ^
@@ -365,10 +447,10 @@ exit /b %DSIM_EXIT_CODE%
 ..\\..\\rtl\\interfaces\\{interface_name}.sv
 ..\\..\\rtl\\hdl\\{module_name}.sv
 
-// UVM package file (contains all UVM components)
-..\\uvm\\base\\{module_name}_pkg.sv
+// UVM library (use DSIM built-in UVM)
+-uvm
 
-// Testbench top
+// Testbench top (includes UVM package directly)
 ..\\tb\\{module_name}_tb.sv
 '''
             
@@ -398,18 +480,23 @@ exit /b %DSIM_EXIT_CODE%
             ("driver_template.sv", f"{self.config['directories']['sim_uvm']}/agents/{self.config['dut']['module_name']}_driver.sv"),
             ("monitor_template.sv", f"{self.config['directories']['sim_uvm']}/agents/{self.config['dut']['module_name']}_monitor.sv"),
             ("agent_template.sv", f"{self.config['directories']['sim_uvm']}/agents/{self.config['dut']['module_name']}_agent.sv"),
-            ("scoreboard_template.sv", f"{self.config['directories']['sim_uvm']}/env/{self.config['dut']['module_name']}_scoreboard.sv"),
             ("env_template.sv", f"{self.config['directories']['sim_uvm']}/env/{self.config['dut']['module_name']}_env.sv"),
-            ("test_template.sv", f"{self.config['directories']['sim_uvm']}/tests/{self.config['dut']['module_name']}_test.sv"),
-            ("pkg_template.sv", f"{self.config['directories']['sim_uvm']}/base/{self.config['dut']['module_name']}_pkg.sv"),
-            ("tb_template.sv", f"{self.config['directories']['sim_tb']}/{self.config['dut']['module_name']}_tb.sv")
+            ("test_template.sv", f"{self.config['directories']['sim_uvm']}/tests/{self.config['dut']['module_name']}_test.sv")
         ]
         
-        # Generate all files
+        # Generate all files from templates
         success = True
         for template_file, output_file in file_mappings:
             if not self.generate_file_from_template(template_file, output_file):
                 success = False
+
+        # Generate package file (must be done after all components are generated)
+        if not self.generate_package_file():
+            success = False
+
+        # Generate testbench with proper imports
+        if not self.generate_testbench_file():
+            success = False
 
         # Generate simulation scripts
         if not self.generate_dsim_script():

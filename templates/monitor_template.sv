@@ -67,7 +67,7 @@ class register_file_monitor extends uvm_monitor;
         register_file_transaction trans;
         
         trans = register_file_transaction::type_id::create("monitored_write_trans");
-        trans.operation = WRITE;
+        trans.operation = {module_name}_transaction::WRITE;
         trans.address = vif.monitor_cb.address;
         trans.data = vif.monitor_cb.write_data;
         trans.ready = vif.monitor_cb.ready;
@@ -82,7 +82,7 @@ class register_file_monitor extends uvm_monitor;
         register_file_transaction trans;
         
         trans = register_file_transaction::type_id::create("monitored_read_trans");
-        trans.operation = READ;
+        trans.operation = {module_name}_transaction::READ;
         trans.address = vif.monitor_cb.address;
         trans.data = vif.monitor_cb.read_data;
         trans.ready = vif.monitor_cb.ready;

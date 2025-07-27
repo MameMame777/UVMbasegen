@@ -27,7 +27,7 @@ class register_file_agent extends uvm_agent;
         super.build_phase(phase);
         
         // Get configuration if available
-        void'(uvm_config_db#(int)::get(this, "", "is_active", is_active));
+        uvm_config_db#(int)::get(this, "", "is_active", is_active);
         
         // Always create monitor
         monitor = register_file_monitor::type_id::create("monitor", this);
