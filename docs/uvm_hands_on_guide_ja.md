@@ -225,10 +225,10 @@ classDiagram
     Base_Component <|-- Enhanced_Implementation
     Base_Component <|-- Test_Override
     
-    uvm_factory --> Base_Component : インスタンス作成
-    uvm_factory -.-> Original_Implementation : デフォルト作成
-    uvm_factory -.-> Enhanced_Implementation : オーバーライド有り
-    uvm_factory -.-> Test_Override : テストオーバーライド
+    uvm_factory --> Base_Component : creates instances
+    uvm_factory -.-> Original_Implementation : default creation
+    uvm_factory -.-> Enhanced_Implementation : with override
+    uvm_factory -.-> Test_Override : with test override
     
     note for uvm_factory "ファクトリーは実行時に<br/>コード変更なしで<br/>コンポーネントの置換を可能にする"
 ```
@@ -406,8 +406,8 @@ graph TB
     end
     
     BaseClass --> DriverClass
-    DriverClass --> VIF : 使用
-    DriverClass --> TxnClass : 消費
+    DriverClass --> VIF : uses
+    DriverClass --> TxnClass : consumes
     
     note1[ドライバーフロー:<br/>1. シーケンサーからトランザクション取得<br/>2. ピンレベル活動に変換<br/>3. インターフェース信号を駆動<br/>4. 完了まで待機]
     
@@ -442,10 +442,10 @@ graph TB
     end
     
     BaseClass --> MonitorClass
-    MonitorClass --> VIF : 観測
-    MonitorClass --> TxnClass : 作成
-    MonitorClass --> SB : analysis_port経由で送信
-    MonitorClass --> Cov : analysis_port経由で送信
+    MonitorClass --> VIF : observes
+    MonitorClass --> TxnClass : creates
+    MonitorClass --> SB : sends via analysis_port
+    MonitorClass --> Cov : sends via analysis_port
     
     note1[モニターフロー:<br/>1. インターフェース信号を観測<br/>2. トランザクション境界を検出<br/>3. トランザクションを再構築<br/>4. 解析コンポーネントに送信]
     
@@ -478,9 +478,9 @@ graph TB
         TxnClass[register_file_transaction]
     end
     
-    Sequencer <--> Driver : TLM接続
-    SeqClass --> Sequencer : 実行される
-    SeqClass --> TxnClass : 生成
+    Sequencer <--> Driver : TLM connection
+    SeqClass --> Sequencer : runs on
+    SeqClass --> TxnClass : generates
     
     note1[エージェントタイプ:<br/>• ACTIVE: ドライバー有り（駆動可能）<br/>• PASSIVE: モニターのみ（観測のみ）]
     
@@ -540,9 +540,9 @@ graph LR
         Coverage["カバレッジ<br/>uvm_analysis_imp#(transaction) analysis_imp"]
     end
     
-    Driver --> Sequencer : トランザクションを取得
-    Monitor --> Scoreboard : トランザクションを送信
-    Monitor --> Coverage : トランザクションを送信
+    Driver --> Sequencer : pull transactions
+    Monitor --> Scoreboard : push transactions
+    Monitor --> Coverage : push transactions
     
     note1[TLM接続ルール:<br/>• ポートはエクスポートに接続<br/>• 多対一接続が可能<br/>• 型安全性が強制される]
     
@@ -597,12 +597,12 @@ classDiagram
 
 ```mermaid
 flowchart TD
-    Start([sequence.start(sequencer)]) --> PreBody[pre_body<br/>オプショナルセットアップ]
+    Start([sequence.start sequencer]) --> PreBody[pre_body<br/>オプショナルセットアップ]
     PreBody --> Body[body<br/>メインシーケンスロジック]
     
     Body --> Fork{並列実行}
-    Fork --> Item1[start_item(req)<br/>randomize()<br/>finish_item(req)]
-    Fork --> Item2[start_item(req)<br/>randomize()<br/>finish_item(req)]
+    Fork --> Item1[start_item req<br/>randomize<br/>finish_item req]
+    Fork --> Item2[start_item req<br/>randomize<br/>finish_item req]
     
     Item1 --> PostBody[post_body<br/>オプショナルクリーンアップ]
     Item2 --> PostBody
@@ -785,7 +785,7 @@ graph TB
     
     subgraph ConnErrors["接続の問題"]
         CO1[エラー: ポートが接続されていない]
-        CO2[解決策: connect_phase()を確認]
+        CO2[解決策: connect_phase を確認]
         CO1 --> CO2
     end
     
@@ -818,15 +818,15 @@ flowchart TD
     CheckFactory --> Stop1([停止])
     
     CompCreated -->|はい| ConnWorking{接続が動作している?}
-    ConnWorking -->|いいえ| CheckTLM[TLMポート接続を確認<br/>connect_phase()を検証]
+    ConnWorking -->|いいえ| CheckTLM[TLMポート接続を確認<br/>connect_phase を検証]
     CheckTLM --> Stop2([停止])
     
     ConnWorking -->|はい| SeqRunning{シーケンスが実行されている?}
-    SeqRunning -->|いいえ| CheckSeq[シーケンサーセットアップを確認<br/>sequence start()を検証]
+    SeqRunning -->|いいえ| CheckSeq[シーケンサーセットアップを確認<br/>sequence start を検証]
     CheckSeq --> Stop3([停止])
     
     SeqRunning -->|はい| TestComplete{テストが完了する?}
-    TestComplete -->|いいえ| CheckObj[objectionハンドリングを確認<br/>phase.raise_objection()を検証<br/>phase.drop_objection()を検証]
+    TestComplete -->|いいえ| CheckObj[objectionハンドリングを確認<br/>phase.raise_objection を検証<br/>phase.drop_objection を検証]
     CheckObj --> Stop4([停止])
     
     TestComplete -->|はい| Success[テストが正常に実行される]

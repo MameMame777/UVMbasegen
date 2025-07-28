@@ -99,7 +99,7 @@ graph LR
 graph TB
     subgraph TB["UVM Testbench"]
         subgraph TestLayer["Test Layer"]
-            Test["uvm_test<br/>build_phase()<br/>run_phase()"]
+            Test["uvm_test<br/>build_phase<br/>run_phase"]
             BaseTest[base_test]
             SpecTests[specific_tests]
             Test --> BaseTest
@@ -107,25 +107,25 @@ graph TB
         end
         
         subgraph EnvLayer["Environment Layer"]
-            Env["uvm_env<br/>build_phase()<br/>connect_phase()"]
-            SB["scoreboard<br/>write()<br/>check()"]
-            Cov["coverage<br/>sample()"]
+            Env["uvm_env<br/>build_phase<br/>connect_phase"]
+            SB["scoreboard<br/>write<br/>check"]
+            Cov["coverage<br/>sample"]
             Env --> SB
             Env --> Cov
         end
         
         subgraph AgentLayer["Agent Layer"]
-            Agent["uvm_agent<br/>build_phase()<br/>connect_phase()"]
-            Driver["uvm_driver<br/>run_phase()<br/>drive_item()"]
-            Monitor["uvm_monitor<br/>run_phase()<br/>collect_transactions()"]
-            Sequencer["uvm_sequencer<br/>run_phase()"]
+            Agent["uvm_agent<br/>build_phase<br/>connect_phase"]
+            Driver["uvm_driver<br/>run_phase<br/>drive_item"]
+            Monitor["uvm_monitor<br/>run_phase<br/>collect_transactions"]
+            Sequencer["uvm_sequencer<br/>run_phase"]
             Agent --> Driver
             Agent --> Monitor
             Agent --> Sequencer
         end
         
         subgraph SeqLayer["Sequence Layer"]
-            Sequence["uvm_sequence<br/>body()"]
+            Sequence["uvm_sequence<br/>body"]
             BaseSeq[base_sequence]
             TestSeqs[test_sequences]
             Sequence --> BaseSeq
@@ -133,7 +133,7 @@ graph TB
         end
         
         subgraph TxnLayer["Transaction Layer"]
-            Txn["uvm_sequence_item<br/>randomize()<br/>convert2string()"]
+            Txn["uvm_sequence_item<br/>randomize<br/>convert2string"]
         end
     end
     
@@ -459,7 +459,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph Agent["register_file_agent"]
-        AgentClass["register_file_driver driver<br/>register_file_monitor monitor<br/>uvm_sequencer sequencer<br/>register_file_config cfg<br/>build_phase()<br/>connect_phase()"]
+        AgentClass["register_file_driver driver<br/>register_file_monitor monitor<br/>uvm_sequencer sequencer<br/>register_file_config cfg<br/>build_phase<br/>connect_phase"]
         
         Driver["register_file_driver<br/>seq_item_port"]
         Monitor[register_file_monitor]
@@ -597,12 +597,12 @@ classDiagram
 
 ```mermaid
 flowchart TD
-    Start([sequence.start(sequencer)]) --> PreBody[pre_body<br/>Optional setup]
+    Start([sequence.start sequencer]) --> PreBody[pre_body<br/>Optional setup]
     PreBody --> Body[body<br/>Main sequence logic]
     
     Body --> Fork{Parallel execution}
-    Fork --> Item1[start_item(req)<br/>randomize()<br/>finish_item(req)]
-    Fork --> Item2[start_item(req)<br/>randomize()<br/>finish_item(req)]
+    Fork --> Item1[start_item req<br/>randomize<br/>finish_item req]
+    Fork --> Item2[start_item req<br/>randomize<br/>finish_item req]
     
     Item1 --> PostBody[post_body<br/>Optional cleanup]
     Item2 --> PostBody
@@ -785,7 +785,7 @@ graph TB
     
     subgraph ConnErrors["Connection Issues"]
         CO1[Error: Port not connected]
-        CO2[Solution: Check connect_phase()]
+        CO2[Solution: Check connect_phase]
         CO1 --> CO2
     end
     
@@ -818,7 +818,7 @@ flowchart TD
     CheckFactory --> Stop1([Stop])
     
     CompCreated -->|Yes| ConnWorking{Connections working?}
-    ConnWorking -->|No| CheckTLM[Check TLM port connections<br/>Verify connect_phase()]
+    ConnWorking -->|No| CheckTLM[Check TLM port connections<br/>Verify connect_phase]
     CheckTLM --> Stop2([Stop])
     
     ConnWorking -->|Yes| SeqRunning{Sequences running?}
