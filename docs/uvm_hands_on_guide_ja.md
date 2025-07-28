@@ -39,7 +39,7 @@ graph TB
         B5[高い再利用性<br/>保守が容易<br/>業界標準<br/>スケーラブルアーキテクチャ]
     end
     
-    Traditional -.-> UVM
+    Traditional --> UVM
     
     style Traditional fill:#ffcccc
     style UVM fill:#ccffcc
@@ -225,10 +225,10 @@ classDiagram
     Base_Component <|-- Enhanced_Implementation
     Base_Component <|-- Test_Override
     
-    uvm_factory --> Base_Component : creates instances
-    uvm_factory -.-> Original_Implementation : default creation
-    uvm_factory -.-> Enhanced_Implementation : with override
-    uvm_factory -.-> Test_Override : with test override
+    uvm_factory --> Base_Component
+    uvm_factory --> Original_Implementation
+    uvm_factory --> Enhanced_Implementation
+    uvm_factory --> Test_Override
     
     note for uvm_factory "ファクトリーは実行時に<br/>コード変更なしで<br/>コンポーネントの置換を可能にする"
 ```
@@ -342,7 +342,7 @@ classDiagram
     }
     
     uvm_sequence_item <|-- register_file_transaction
-    register_file_transaction --> operation_e : uses
+    register_file_transaction --> operation_e
     
     note for register_file_transaction "UVMマクロ:\n`uvm_object_utils(register_file_transaction)\n`uvm_field_enum(operation_e, operation, UVM_ALL_ON)\n`uvm_field_int(address, UVM_ALL_ON)\n`uvm_field_int(data, UVM_ALL_ON)"
 ```
@@ -406,8 +406,8 @@ graph TB
     end
     
     BaseClass --> DriverClass
-    DriverClass --> VIF : uses
-    DriverClass --> TxnClass : consumes
+    DriverClass --> VIF
+    DriverClass --> TxnClass
     
     note1[ドライバーフロー:<br/>1. シーケンサーからトランザクション取得<br/>2. ピンレベル活動に変換<br/>3. インターフェース信号を駆動<br/>4. 完了まで待機]
     
@@ -442,10 +442,10 @@ graph TB
     end
     
     BaseClass --> MonitorClass
-    MonitorClass --> VIF : observes
-    MonitorClass --> TxnClass : creates
-    MonitorClass --> SB : sends via analysis_port
-    MonitorClass --> Cov : sends via analysis_port
+    MonitorClass --> VIF
+    MonitorClass --> TxnClass
+    MonitorClass --> SB
+    MonitorClass --> Cov
     
     note1[モニターフロー:<br/>1. インターフェース信号を観測<br/>2. トランザクション境界を検出<br/>3. トランザクションを再構築<br/>4. 解析コンポーネントに送信]
     
@@ -478,9 +478,9 @@ graph TB
         TxnClass[register_file_transaction]
     end
     
-    Sequencer <--> Driver : TLM connection
-    SeqClass --> Sequencer : runs on
-    SeqClass --> TxnClass : generates
+    Sequencer <--> Driver
+    SeqClass --> Sequencer
+    SeqClass --> TxnClass
     
     note1[エージェントタイプ:<br/>• ACTIVE: ドライバー有り（駆動可能）<br/>• PASSIVE: モニターのみ（観測のみ）]
     
@@ -540,9 +540,9 @@ graph LR
         Coverage["カバレッジ<br/>uvm_analysis_imp#(transaction) analysis_imp"]
     end
     
-    Driver --> Sequencer : pull transactions
-    Monitor --> Scoreboard : push transactions
-    Monitor --> Coverage : push transactions
+    Driver --> Sequencer
+    Monitor --> Scoreboard
+    Monitor --> Coverage
     
     note1[TLM接続ルール:<br/>• ポートはエクスポートに接続<br/>• 多対一接続が可能<br/>• 型安全性が強制される]
     

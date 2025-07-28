@@ -39,7 +39,7 @@ graph TB
         B5[• High reusability<br/>• Easy maintenance<br/>• Industry standard<br/>• Scalable architecture]
     end
     
-    Traditional -.-> UVM
+    Traditional --> UVM
     
     style Traditional fill:#ffcccc
     style UVM fill:#ccffcc
@@ -225,10 +225,10 @@ classDiagram
     Base_Component <|-- Enhanced_Implementation
     Base_Component <|-- Test_Override
     
-    uvm_factory --> Base_Component : creates instances
-    uvm_factory -.-> Original_Implementation : default creation
-    uvm_factory -.-> Enhanced_Implementation : with override
-    uvm_factory -.-> Test_Override : with test override
+    uvm_factory --> Base_Component
+    uvm_factory --> Original_Implementation
+    uvm_factory --> Enhanced_Implementation
+    uvm_factory --> Test_Override
     
     note for uvm_factory "Factory allows runtime<br/>replacement of components<br/>without code changes"
 ```
@@ -342,7 +342,7 @@ classDiagram
     }
     
     uvm_sequence_item <|-- register_file_transaction
-    register_file_transaction --> operation_e : uses
+    register_file_transaction --> operation_e
     
     note for register_file_transaction "UVM Macros:<br/>`uvm_object_utils(register_file_transaction)<br/>`uvm_field_enum(operation_e, operation, UVM_ALL_ON)<br/>`uvm_field_int(address, UVM_ALL_ON)<br/>`uvm_field_int(data, UVM_ALL_ON)"
 ```
@@ -406,8 +406,8 @@ graph TB
     end
     
     BaseClass --> DriverClass
-    DriverClass --> VIF : uses
-    DriverClass --> TxnClass : consumes
+    DriverClass --> VIF
+    DriverClass --> TxnClass
     
     note1[Driver Flow:<br/>1. Get transaction from sequencer<br/>2. Convert to pin-level activity<br/>3. Drive interface signals<br/>4. Wait for completion]
     
@@ -442,10 +442,10 @@ graph TB
     end
     
     BaseClass --> MonitorClass
-    MonitorClass --> VIF : observes
-    MonitorClass --> TxnClass : creates
-    MonitorClass --> SB : sends via analysis_port
-    MonitorClass --> Cov : sends via analysis_port
+    MonitorClass --> VIF
+    MonitorClass --> TxnClass
+    MonitorClass --> SB
+    MonitorClass --> Cov
     
     note1[Monitor Flow:<br/>1. Observe interface signals<br/>2. Detect transaction boundaries<br/>3. Reconstruct transactions<br/>4. Send to analysis components]
     
@@ -478,9 +478,9 @@ graph TB
         TxnClass[register_file_transaction]
     end
     
-    Sequencer <--> Driver : TLM connection
-    SeqClass --> Sequencer : runs on
-    SeqClass --> TxnClass : generates
+    Sequencer <--> Driver
+    SeqClass --> Sequencer
+    SeqClass --> TxnClass
     
     note1[Agent Types:<br/>• ACTIVE: Has driver (can drive)<br/>• PASSIVE: Monitor only (observe)]
     
@@ -540,9 +540,9 @@ graph LR
         Coverage["Coverage<br/>uvm_analysis_imp#(transaction) analysis_imp"]
     end
     
-    Driver --> Sequencer : pull transactions
-    Monitor --> Scoreboard : push transactions
-    Monitor --> Coverage : push transactions
+    Driver --> Sequencer
+    Monitor --> Scoreboard
+    Monitor --> Coverage
     
     note1[TLM Connection Rules:<br/>• Ports connect to Exports<br/>• Many-to-one connections allowed<br/>• Type safety enforced]
     
