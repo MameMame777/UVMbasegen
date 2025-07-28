@@ -71,7 +71,7 @@ graph LR
         P2 --> P3[DUT]
         P3 --> P4[モニター]
         P4 --> P5[チェッカー]
-        P6[信号レベル:<br/>clk, rst, data[31:0]<br/>valid, ready...]
+        P6["信号レベル:<br/>clk, rst, data 31:0<br/>valid, ready..."]
     end
     
     subgraph TLM["トランザクションレベル（UVM）"]
@@ -80,7 +80,7 @@ graph LR
         T3 --> T4[DUT]
         T4 --> T5[モニター]
         T5 --> T6[スコアボード]
-        T7[抽象化レベル:<br/>• Write(addr=0x100, data=0xDEAD)<br/>• Read(addr=0x104)<br/>• Reset()]
+        T7["抽象化レベル:<br/>• Write(addr=0x100, data=0xDEAD)<br/>• Read(addr=0x104)<br/>• Reset()"]
     end
     
     Pin --> TLM
@@ -258,7 +258,7 @@ ls
 graph TB
     subgraph DUT["レジスターファイルDUT"]
         AddrDec[アドレスデコーダー]
-        RegArray[レジスター配列<br/>[0:3][31:0]]
+        RegArray["レジスター配列<br/>0:3 31:0"]
         RWLogic[読み書きロジック]
         
         AddrDec --> RegArray
@@ -268,14 +268,14 @@ graph TB
     subgraph Inputs["入力信号"]
         CLK[clk]
         RESET[reset]
-        ADDR[address[1:0]]
-        WDATA[write_data[31:0]]
+        ADDR["address 1:0"]
+        WDATA["write_data 31:0"]
         WE[write_enable]
         RE[read_enable]
     end
     
     subgraph Outputs["出力信号"]
-        RDATA[read_data[31:0]]
+        RDATA["read_data 31:0"]
         READY[ready]
     end
     
@@ -318,8 +318,8 @@ flowchart TD
 classDiagram
     class register_file_transaction {
         +rand operation_e operation
-        +rand bit[1:0] address
-        +rand bit[31:0] data
+        +rand bit 1:0 address
+        +rand bit 31:0 data
         +time start_time
         +time end_time
         +new()
@@ -398,7 +398,7 @@ graph TB
     end
     
     subgraph Interface["インターフェース"]
-        VIF[register_file_if<br/>clk, reset<br/>address[1:0]<br/>write_data[31:0]<br/>write_enable<br/>read_enable<br/>read_data[31:0]<br/>ready]
+        VIF["register_file_if<br/>clk, reset<br/>address 1:0<br/>write_data 31:0<br/>write_enable<br/>read_enable<br/>read_data 31:0<br/>ready"]
     end
     
     subgraph Transaction["トランザクション"]

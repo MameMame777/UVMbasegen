@@ -71,7 +71,7 @@ graph LR
         P2 --> P3[DUT]
         P3 --> P4[Monitor]
         P4 --> P5[Checker]
-        P6[Signal Level:<br/>clk, rst, data[31:0]<br/>valid, ready...]
+        P6["Signal Level:<br/>clk, rst, data 31:0<br/>valid, ready..."]
     end
     
     subgraph TLM["Transaction-Level (UVM)"]
@@ -80,7 +80,7 @@ graph LR
         T3 --> T4[DUT]
         T4 --> T5[Monitor]
         T5 --> T6[Scoreboard]
-        T7[Abstraction Level:<br/>• Write(addr=0x100, data=0xDEAD)<br/>• Read(addr=0x104)<br/>• Reset()]
+        T7["Abstraction Level:<br/>• Write(addr=0x100, data=0xDEAD)<br/>• Read(addr=0x104)<br/>• Reset()"]
     end
     
     Pin --> TLM
@@ -258,7 +258,7 @@ ls
 graph TB
     subgraph DUT["Register File DUT"]
         AddrDec[Address Decoder]
-        RegArray[Register Array<br/>[0:3][31:0]]
+        RegArray["Register Array<br/>0:3 31:0"]
         RWLogic[Read/Write Logic]
         
         AddrDec --> RegArray
@@ -268,14 +268,14 @@ graph TB
     subgraph Inputs["Input Signals"]
         CLK[clk]
         RESET[reset]
-        ADDR[address[1:0]]
-        WDATA[write_data[31:0]]
+        ADDR["address 1:0"]
+        WDATA["write_data 31:0"]
         WE[write_enable]
         RE[read_enable]
     end
     
     subgraph Outputs["Output Signals"]
-        RDATA[read_data[31:0]]
+        RDATA["read_data 31:0"]
         READY[ready]
     end
     
@@ -318,8 +318,8 @@ flowchart TD
 classDiagram
     class register_file_transaction {
         +rand operation_e operation
-        +rand bit[1:0] address
-        +rand bit[31:0] data
+        +rand bit 1:0 address
+        +rand bit 31:0 data
         +time start_time
         +time end_time
         +new()
@@ -398,7 +398,7 @@ graph TB
     end
     
     subgraph Interface["Interface"]
-        VIF[register_file_if<br/>clk, reset<br/>address[1:0]<br/>write_data[31:0]<br/>write_enable<br/>read_enable<br/>read_data[31:0]<br/>ready]
+        VIF["register_file_if<br/>clk, reset<br/>address 1:0<br/>write_data 31:0<br/>write_enable<br/>read_enable<br/>read_data 31:0<br/>ready"]
     end
     
     subgraph Transaction["Transaction"]
