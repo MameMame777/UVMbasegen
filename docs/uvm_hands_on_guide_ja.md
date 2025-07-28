@@ -99,7 +99,7 @@ graph LR
 graph TB
     subgraph TB["UVMテストベンチ"]
         subgraph TestLayer["テストレイヤー"]
-            Test[uvm_test<br/>+build_phase()<br/>+run_phase()]
+            Test["uvm_test<br/>build_phase()<br/>run_phase()"]
             BaseTest[base_test]
             SpecTests[specific_tests]
             Test --> BaseTest
@@ -107,25 +107,25 @@ graph TB
         end
         
         subgraph EnvLayer["環境レイヤー"]
-            Env[uvm_env<br/>+build_phase()<br/>+connect_phase()]
-            SB[scoreboard<br/>+write()<br/>+check()]
-            Cov[coverage<br/>+sample()]
+            Env["uvm_env<br/>build_phase()<br/>connect_phase()"]
+            SB["scoreboard<br/>write()<br/>check()"]
+            Cov["coverage<br/>sample()"]
             Env --> SB
             Env --> Cov
         end
         
         subgraph AgentLayer["エージェントレイヤー"]
-            Agent[uvm_agent<br/>+build_phase()<br/>+connect_phase()]
-            Driver[uvm_driver<br/>+run_phase()<br/>+drive_item()]
-            Monitor[uvm_monitor<br/>+run_phase()<br/>+collect_transactions()]
-            Sequencer[uvm_sequencer<br/>+run_phase()]
+            Agent["uvm_agent<br/>build_phase()<br/>connect_phase()"]
+            Driver["uvm_driver<br/>run_phase()<br/>drive_item()"]
+            Monitor["uvm_monitor<br/>run_phase()<br/>collect_transactions()"]
+            Sequencer["uvm_sequencer<br/>run_phase()"]
             Agent --> Driver
             Agent --> Monitor
             Agent --> Sequencer
         end
         
         subgraph SeqLayer["シーケンスレイヤー"]
-            Sequence[uvm_sequence<br/>+body()]
+            Sequence["uvm_sequence<br/>body()"]
             BaseSeq[base_sequence]
             TestSeqs[test_sequences]
             Sequence --> BaseSeq
@@ -133,7 +133,7 @@ graph TB
         end
         
         subgraph TxnLayer["トランザクションレイヤー"]
-            Txn[uvm_sequence_item<br/>+randomize()<br/>+convert2string()]
+            Txn["uvm_sequence_item<br/>randomize()<br/>convert2string()"]
         end
     end
     
@@ -390,11 +390,11 @@ endclass
 ```mermaid
 graph TB
     subgraph Driver["UVMドライバーコンポーネント"]
-        DriverClass[register_file_driver<br/>+virtual register_file_if vif<br/>+uvm_seq_item_pull_port seq_item_port<br/>+build_phase()<br/>+run_phase()<br/>+drive_item()<br/>+wait_for_reset()<br/>+drive_write()<br/>+drive_read()]
+        DriverClass["register_file_driver<br/>virtual register_file_if vif<br/>uvm_seq_item_pull_port seq_item_port<br/>build_phase()<br/>run_phase()<br/>drive_item()<br/>wait_for_reset()<br/>drive_write()<br/>drive_read()"]
     end
     
     subgraph BaseDriver["基底クラス"]
-        BaseClass[uvm_driver<br/>+abstract run_phase()]
+        BaseClass["uvm_driver<br/>abstract run_phase()"]
     end
     
     subgraph Interface["インターフェース"]
@@ -421,11 +421,11 @@ graph TB
 ```mermaid
 graph TB
     subgraph Monitor["UVMモニターコンポーネント"]
-        MonitorClass[register_file_monitor<br/>+virtual register_file_if vif<br/>+uvm_analysis_port ap<br/>+build_phase()<br/>+run_phase()<br/>+collect_transaction()<br/>+check_protocol()]
+        MonitorClass["register_file_monitor<br/>virtual register_file_if vif<br/>uvm_analysis_port ap<br/>build_phase()<br/>run_phase()<br/>collect_transaction()<br/>check_protocol()"]
     end
     
     subgraph BaseMonitor["基底クラス"]
-        BaseClass[uvm_monitor<br/>+abstract run_phase()]
+        BaseClass["uvm_monitor<br/>abstract run_phase()"]
     end
     
     subgraph Interface["インターフェース"]
@@ -459,11 +459,11 @@ graph TB
 ```mermaid
 graph TB
     subgraph Agent["register_file_agent"]
-        AgentClass[+register_file_driver driver<br/>+register_file_monitor monitor<br/>+uvm_sequencer sequencer<br/>+register_file_config cfg<br/>+build_phase()<br/>+connect_phase()]
+        AgentClass["register_file_driver driver<br/>register_file_monitor monitor<br/>uvm_sequencer sequencer<br/>register_file_config cfg<br/>build_phase()<br/>connect_phase()"]
         
-        Driver[register_file_driver<br/>+seq_item_port]
+        Driver["register_file_driver<br/>seq_item_port"]
         Monitor[register_file_monitor]
-        Sequencer[uvm_sequencer<br/>+seq_item_export<br/>+run_phase()]
+        Sequencer["uvm_sequencer<br/>seq_item_export<br/>run_phase()"]
         
         AgentClass --> Driver
         AgentClass --> Monitor
@@ -471,7 +471,7 @@ graph TB
     end
     
     subgraph Sequence["シーケンス"]
-        SeqClass[register_file_sequence<br/>+body()]
+        SeqClass["register_file_sequence<br/>body()"]
     end
     
     subgraph Transaction["トランザクション"]
@@ -530,14 +530,14 @@ sequenceDiagram
 ```mermaid
 graph LR
     subgraph Producer["プロデューサー側"]
-        Driver[ドライバー<br/>+uvm_seq_item_pull_port seq_item_port]
-        Monitor[モニター<br/>+uvm_analysis_port#(transaction) ap]
+        Driver["ドライバー<br/>uvm_seq_item_pull_port seq_item_port"]
+        Monitor["モニター<br/>uvm_analysis_port#(transaction) ap"]
     end
     
     subgraph Consumer["コンシューマー側"]
-        Sequencer[シーケンサー<br/>+uvm_seq_item_pull_export seq_item_export]
-        Scoreboard[スコアボード<br/>+uvm_analysis_imp#(transaction) analysis_imp]
-        Coverage[カバレッジ<br/>+uvm_analysis_imp#(transaction) analysis_imp]
+        Sequencer["シーケンサー<br/>uvm_seq_item_pull_export seq_item_export"]
+        Scoreboard["スコアボード<br/>uvm_analysis_imp#(transaction) analysis_imp"]
+        Coverage["カバレッジ<br/>uvm_analysis_imp#(transaction) analysis_imp"]
     end
     
     Driver --> Sequencer : トランザクションを取得
