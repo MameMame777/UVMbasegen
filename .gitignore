@@ -11,6 +11,15 @@ sim/exec/*.log
 dsim.env
 *.env
 
+# Security-sensitive files
+**/dsim.env
+**/*.env
+**/dsim.log
+**/*license*.json
+**/*key*
+**/*secret*
+**/*password*
+
 # General simulation files
 *.vcd
 *.mxd

@@ -210,6 +210,41 @@ The generated code follows these SystemVerilog and UVM best practices:
 - **Documentation**: Comprehensive comments in English
 - **Error Handling**: Proper error checking and reporting
 
+## Security Guidelines
+
+⚠️ **Important**: This project contains sensitive information that should not be committed to public repositories.
+
+### Files to Never Commit
+
+- `dsim.env` - Contains system environment and personal paths
+- `*.env` - Any environment files
+- License files (`*license*.json`)
+- Personal configuration files
+
+### Before Committing
+
+1. **Review staged files** for personal information:
+   ```bash
+   git diff --cached | grep -i "users\\|pc-\\|appdata"
+   ```
+
+2. **Use environment variables** instead of hardcoded paths:
+   ```batch
+   # Good
+   set "DSIM_HOME=%USERPROFILE%\\AppData\\Local\\metrics-ca\\dsim"
+   
+   # Bad - contains personal info
+   set "DSIM_HOME=C:\\Users\\YourName\\AppData\\Local\\metrics-ca\\dsim"
+   ```
+
+3. **Install security hook** (optional):
+   ```bash
+   cp scripts/pre-commit-security-check.sh .git/hooks/pre-commit
+   chmod +x .git/hooks/pre-commit
+   ```
+
+For detailed security guidelines, see [Security Guidelines](docs/security_guidelines.md).
+
 ## Troubleshooting
 
 ### Common Issues
