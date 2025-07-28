@@ -1,0 +1,168 @@
+=N:[UVMSource] Using sources from '${DSIM_HOME}\uvm\1.2'
+=N:[UsageMeter (2025-07-28 20:30:26 JST)] usage server initial connection
+=N:[License] 
+Licensed for Altair DSim Cloud.
+=N:[License] New lease granted.
+Analyzing...
+Elaborating...
+  Top-level modules:
+    $unit
+    register_file_tb
+=W:[IneffectiveDynamicCast]:
+    The following dynamic $cast cases will always be false    
+
+    ${DSIM_HOME}\uvm\1.2\src\base\uvm_callback.svh:521:9              class uvm_pkg::uvm_callbacks#(class uvm_pkg::uvm_phase,class uvm_pkg::uvm_phase_cb)    class uvm_pkg::uvm_callbacks#(class uvm_pkg::uvm_phase,class uvm_pkg::uvm_callback)    
+    Included from ${DSIM_HOME}\uvm\1.2\src\base\uvm_base.svh:76:12                                                                                                                                                                                  
+    Included from ${DSIM_HOME}\uvm\1.2\src\uvm_pkg.sv:31:12                                                                                                                                                                                         
+
+    ${DSIM_HOME}\uvm\1.2\src\base\uvm_callback.svh:671:12             class uvm_pkg::uvm_phase                                                               class uvm_pkg::uvm_report_object                                                       
+    Included from ${DSIM_HOME}\uvm\1.2\src\base\uvm_base.svh:76:12                                                                                                                                                                                  
+
+    ${DSIM_HOME}\uvm\1.2\src\base\uvm_callback.svh:731:10             class uvm_pkg::uvm_component                                                           class uvm_pkg::uvm_phase                                                               
+    Included from ${DSIM_HOME}\uvm\1.2\src\base\uvm_base.svh:76:12                                                                                                                                                                                  
+
+    ${DSIM_HOME}\uvm\1.2\src\base\uvm_callback.svh:808:10             class uvm_pkg::uvm_component                                                           class uvm_pkg::uvm_phase                                                               
+    Included from ${DSIM_HOME}\uvm\1.2\src\base\uvm_base.svh:76:12                                                                                                                                                                                  
+
+=W:[ExprStmtNotVoid]:
+    The following expressions used as statements do not have void type:    
+
+    .\..\uvm\base\..\agents\register_file_agent.sv:30:9     bit    
+    Included from ..\uvm\base\register_file_pkg.sv:15:14           
+
+  Found 6 unique specialization(s) of 6 design element(s).
+=W:[MissingTimescale]:
+    It is illegal for some design elements to have time specifications    
+    while others don't.  A complete time specification includes           
+    both a time unit and time precision.                                  
+
+        Have complete time spec    Have no/incomplete time spec    
+
+        register_file              uvm_pkg                         
+        register_file_if                                           
+        register_file_pkg                                          
+        register_file_tb                                           
+
+Optimizing...
+Building models...
+PLI/VPI access: +b 
+Simulation time precision is 1ps.
+  [1/9] module $root: 1822 functions, 4009 basic blocks
+  [2/9] module $pkgs: 1 functions, 2 basic blocks
+  [3/9] CU scope $unit: 1 functions, 2 basic blocks
+  [4/9] module register_file_tb: 7 functions, 27 basic blocks
+  [5/9] package std: 33 functions, 84 basic blocks
+  [6/9] package uvm_pkg: 6 submodules, 3777 functions, 41195 basic blocks
+  [7/9] package register_file_pkg: 118 functions, 1123 basic blocks
+  [8/9] interface register_file_if: 38 functions, 133 basic blocks
+  [9/9] module register_file: 5 functions, 35 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+UVM_INFO ${DSIM_HOME}\uvm\1.2\src\base\uvm_root.svh(392) @ 0: reporter [UVM/RELNOTES] 
+----------------------------------------------------------------
+UVM-1.2
+(C) 2007-2014 Mentor Graphics Corporation
+(C) 2007-2014 Cadence Design Systems, Inc.
+(C) 2006-2014 Synopsys, Inc.
+(C) 2011-2013 Cypress Semiconductor Corp.
+(C) 2013-2014 NVIDIA Corporation
+----------------------------------------------------------------
+
+  ***********       IMPORTANT RELEASE NOTES         ************
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+  See http://www.eda.org/svdb/view.php?id=3770 for more details.
+
+      (Specify +UVM_NO_RELNOTES to turn off this notice)
+
+=N:[dumpMXD] preparing MXD dump to 'waves\register_file_basic.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] ..\tb\register_file_tb.sv:44: $dumpfile() called, but dump already enabled.
+=W:[dump] ..\tb\register_file_tb.sv:45: $dumpvars() called after dumping started.
+UVM_INFO @ 0: reporter [RNTST] Running test register_file_basic_test...
+UVM_INFO .\..\uvm\base\..\tests\register_file_test.sv(24) @ 0: uvm_test_top [register_file_basic_test] Base test build completed
+UVM_INFO .\..\uvm\base\..\env\register_file_env.sv(28) @ 0: uvm_test_top.env [register_file_env] Environment components created
+UVM_INFO .\..\uvm\base\..\agents\register_file_agent.sv(41) @ 0: uvm_test_top.env.agent [register_file_agent] Agent created as  ACTIVE
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(37) @ 0: uvm_test_top.env.scoreboard [register_file_scoreboard] Scoreboard initialized
+UVM_INFO .\..\uvm\base\..\env\register_file_env.sv(38) @ 0: uvm_test_top.env [register_file_env] Environment connections completed
+UVM_INFO ${DSIM_HOME}\uvm\1.2\src\base\uvm_root.svh(579) @ 0: reporter [UVMTOP] UVM testbench topology:
+----------------------------------------------------------------
+Name                       Type                      Size  Value
+----------------------------------------------------------------
+uvm_test_top               register_file_basic_test  -     @339 
+  env                      register_file_env         -     @352 
+    agent                  register_file_agent       -     @363 
+      driver               register_file_driver      -     @394 
+        rsp_port           uvm_analysis_port         -     @413 
+        seq_item_port      uvm_seq_item_pull_port    -     @403 
+      monitor              register_file_monitor     -     @385 
+        ap                 uvm_analysis_port         -     @564 
+      sequencer            uvm_sequencer             -     @423 
+        rsp_export         uvm_analysis_export       -     @432 
+        seq_item_export    uvm_seq_item_pull_imp     -     @550 
+        arbitration_queue  array                     0     -    
+        lock_queue         array                     0     -    
+        num_last_reqs      integral                  32    'd1  
+        num_last_rsps      integral                  32    'd1  
+    scoreboard             register_file_scoreboard  -     @372 
+      ap                   uvm_analysis_imp          -     @574 
+----------------------------------------------------------------
+
+UVM_INFO .\..\uvm\base\..\agents\register_file_driver.sv(64) @ 0: uvm_test_top.env.agent.driver [register_file_driver] Waiting for reset deassertion...
+UVM_INFO .\..\uvm\base\..\agents\register_file_monitor.sv(37) @ 0: uvm_test_top.env.agent.monitor [register_file_monitor] Monitor started
+UVM_INFO .\..\uvm\base\..\tests\register_file_test.sv(51) @ 0: uvm_test_top [register_file_basic_test] Starting basic test
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(38) @ 0: uvm_test_top.env.agent.sequencer@@write_seq [register_file_write_sequence] Writing 0xdeadbeef to address 0x0
+UVM_INFO .\..\uvm\base\..\agents\register_file_monitor.sv(41) @ 55000: uvm_test_top.env.agent.monitor [register_file_monitor] Reset deasserted, starting monitoring
+UVM_INFO .\..\uvm\base\..\agents\register_file_driver.sv(72) @ 65000: uvm_test_top.env.agent.driver [register_file_driver] Reset deasserted and DUT ready
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(64) @ 85000: uvm_test_top.env.scoreboard [register_file_scoreboard] WRITE: addr=0x0, data=0xdeadbeef - PASS
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(38) @ 85000: uvm_test_top.env.agent.sequencer@@write_seq [register_file_write_sequence] Writing 0xdeadbef0 to address 0x1
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(64) @ 105000: uvm_test_top.env.scoreboard [register_file_scoreboard] WRITE: addr=0x1, data=0xdeadbef0 - PASS
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(38) @ 105000: uvm_test_top.env.agent.sequencer@@write_seq [register_file_write_sequence] Writing 0xdeadbef1 to address 0x2
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(64) @ 125000: uvm_test_top.env.scoreboard [register_file_scoreboard] WRITE: addr=0x2, data=0xdeadbef1 - PASS
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(38) @ 125000: uvm_test_top.env.agent.sequencer@@write_seq [register_file_write_sequence] Writing 0xdeadbef2 to address 0x3
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(64) @ 145000: uvm_test_top.env.scoreboard [register_file_scoreboard] WRITE: addr=0x3, data=0xdeadbef2 - PASS
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(70) @ 245000: uvm_test_top.env.agent.sequencer@@read_seq [register_file_read_sequence] Reading from address 0x0
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(78) @ 255000: uvm_test_top.env.scoreboard [register_file_scoreboard] READ: addr=0x0, data=0xdeadbeef, expected=0xdeadbeef - PASS
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(70) @ 255000: uvm_test_top.env.agent.sequencer@@read_seq [register_file_read_sequence] Reading from address 0x1
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(78) @ 275000: uvm_test_top.env.scoreboard [register_file_scoreboard] READ: addr=0x1, data=0xdeadbef0, expected=0xdeadbef0 - PASS
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(70) @ 275000: uvm_test_top.env.agent.sequencer@@read_seq [register_file_read_sequence] Reading from address 0x2
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(78) @ 295000: uvm_test_top.env.scoreboard [register_file_scoreboard] READ: addr=0x2, data=0xdeadbef1, expected=0xdeadbef1 - PASS
+UVM_INFO .\..\uvm\base\..\sequences\register_file_sequence.sv(70) @ 295000: uvm_test_top.env.agent.sequencer@@read_seq [register_file_read_sequence] Reading from address 0x3
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(78) @ 315000: uvm_test_top.env.scoreboard [register_file_scoreboard] READ: addr=0x3, data=0xdeadbef2, expected=0xdeadbef2 - PASS
+UVM_INFO .\..\uvm\base\..\tests\register_file_test.sv(73) @ 415000: uvm_test_top [register_file_basic_test] Basic test completed
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(94) @ 415000: uvm_test_top.env.scoreboard [register_file_scoreboard] === SCOREBOARD SUMMARY ===
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(95) @ 415000: uvm_test_top.env.scoreboard [register_file_scoreboard] Total Writes: 4
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(96) @ 415000: uvm_test_top.env.scoreboard [register_file_scoreboard] Total Reads:  4
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(97) @ 415000: uvm_test_top.env.scoreboard [register_file_scoreboard] PASS Count:   8
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(98) @ 415000: uvm_test_top.env.scoreboard [register_file_scoreboard] FAIL Count:   0
+UVM_INFO .\..\uvm\base\..\env\register_file_scoreboard.sv(101) @ 415000: uvm_test_top.env.scoreboard [register_file_scoreboard] *** TEST PASSED ***
+UVM_INFO ${DSIM_HOME}\uvm\1.2\src\base\uvm_report_server.svh(847) @ 415000: reporter [UVM/REPORT/SERVER] 
+--- UVM Report Summary ---
+
+** Report counts by severity
+UVM_INFO :   36
+UVM_WARNING :    0
+UVM_ERROR :    0
+UVM_FATAL :    0
+** Report counts by id
+[RNTST]     1
+[UVM/RELNOTES]     1
+[UVMTOP]     1
+[register_file_agent]     1
+[register_file_basic_test]     3
+[register_file_driver]     2
+[register_file_env]     2
+[register_file_monitor]     2
+[register_file_read_sequence]     4
+[register_file_scoreboard]    15
+[register_file_write_sequence]     4
+
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 415000 (${DSIM_HOME}\uvm\1.2\src\base\uvm_root.svh:517);
+Run directory: ${WORKSPACE_PATH}\sim\exec
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.0.0 (b:R #c:0 h:d894f4c124 os:msys2_)
+  Random seed: (defaulted to 1)

@@ -77,3 +77,4 @@ tmp/
 *.env
 !dsim.env
 dsim.log
+sim/exec/dsim.env
