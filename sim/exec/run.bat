@@ -53,6 +53,25 @@ if not defined DSIM_HOME (
     exit /b 1
 )
 
+REM Set DSIM license if not already set
+if not defined DSIM_LICENSE (
+    set "DSIM_LICENSE=%USERPROFILE%\AppData\Local\metrics-ca\dsim-license.json"
+    echo INFO: Setting DSIM_LICENSE to %DSIM_LICENSE%
+)
+
+REM Verify license file exists
+if not exist "%DSIM_LICENSE%" (
+    echo ERROR: DSIM license file not found at: %DSIM_LICENSE%
+    echo Please ensure DSIM is properly licensed or set DSIM_LICENSE environment variable
+    exit /b 1
+)
+
+REM Activate DSIM environment
+if exist "%DSIM_HOME%\shell_activate.bat" (
+    echo INFO: Activating DSIM environment...
+    call "%DSIM_HOME%\shell_activate.bat"
+)
+
 REM Display test information
 echo.
 echo ================================================================================
